@@ -1,0 +1,23 @@
+module.exports = [
+    {
+        name:'chem',
+        email:"chem@iju.infomed.cu",
+        password:"aaaaaa",
+        role:'CHEM',
+        status:'Available'
+    },
+    {
+        name:'igm',
+        email:"igm@iju.infomed.cu",
+        password:"aaaaaa",
+        role:'IGM',
+        status:'Available'
+    },
+    {
+        name:'salud',
+        email:"salud@iju.infomed.cu",
+        password:"aaaaaa",
+        role:'Salud',
+        status:'Available'
+    }
+]
