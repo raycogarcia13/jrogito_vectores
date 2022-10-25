@@ -3,7 +3,7 @@ import {
   useContext, 
   useState 
 } from "react";
-import { useHistory, Redirect } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import localStorageUtil from "./utils/storage";
 
 const AuthContext = createContext(null);
@@ -13,7 +13,7 @@ const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-  const navigate = useHistory();
+  const navigate = useNavigate();
 
   const [token, setToken] = useState(localStorageUtil.getToken());
   const [user, setUser] = useState(localStorageUtil.get('user')?localStorageUtil.get('user').user:null);
@@ -21,13 +21,13 @@ const AuthProvider = ({ children }) => {
   const handleLogin = (data) => {
       setToken(data.token);
       setUser(data.user);
-      navigate.push('/');
+      navigate('/home',{replace:true});
   };
 
   const handleLogout = () => {
     setToken(null);
     setUser(null);
-    navigate.push('/login');
+    navigate('/login',{replace:true});
   };
 
   const value = {
@@ -46,12 +46,10 @@ const AuthProvider = ({ children }) => {
 
 const ProtectedRoute = ({ children }) => {
   const { token,user } = useAuth();
-  const navigate = useHistory();
+  const navigate = useNavigate();
 
-  console.log(children)
   if (!token || !user) {
-    navigate.push('/login')
-    // return <Redirect to="/login" />;
+    return <Navigate to="/login" replace />;
   }
 
   return children;
@@ -61,7 +59,7 @@ const NoAuthRoute = ({ children }) => {
   const { token,user } = useAuth();
 
   if (token && user) {
-    return <Redirect to="/" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return children;

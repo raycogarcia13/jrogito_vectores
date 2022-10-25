@@ -37,8 +37,6 @@ export const loginAction = (form) => async (dispatch)=>{
 
 export const logoutAction = () => async (dispatch)=>{
         
-        await  api_security.post('/logout');
-
         localStorageUtil.clearToken();
         localStorageUtil.clear('user');
 

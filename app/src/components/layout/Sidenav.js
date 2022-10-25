@@ -16,7 +16,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 
 import { 
-  HeatMapOutlined
+  HeatMapOutlined,
+  DatabaseOutlined
 } from '@ant-design/icons';
 
 function Sidenav({ color }) {
@@ -173,7 +174,7 @@ function Sidenav({ color }) {
       <hr />
       <Menu theme="light" mode="inline">
         <Menu.Item key="1">
-          <NavLink to="/dashboard">
+          <NavLink to="/home">
             <span
               className="icon"
               style={{
@@ -199,10 +200,10 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
 
-        <Menu.Item className="menu-item-header" key="5">
+        <Menu.Item className="menu-item-header" key="14">
           Mapa
         </Menu.Item>
-        <Menu.Item key="6">
+        <Menu.Item key="3">
           <NavLink to="/mapa">
             <span
               className="icon"
@@ -216,27 +217,27 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
 
-        <Menu.Item className="menu-item-header" key="5">
+        <Menu.Item className="menu-item-header" key="13">
           Gestión
         </Menu.Item>
-        <Menu.Item key="6">
-          <NavLink to="/profile">
+        <Menu.Item key="4">
+          <NavLink to="/vectores">
             <span
               className="icon"
               style={{
                 background: page === "profile" ? color : "",
               }}
             >
-              {profile}
+            <DatabaseOutlined />
             </span>
-            <span className="label">Perfil</span>
+            <span className="label">Vectores</span>
           </NavLink>
         </Menu.Item>
 
-        <Menu.Item className="menu-item-header" key="5">
+        <Menu.Item className="menu-item-header" key="12">
           Nomencladores
         </Menu.Item>
-        <Menu.Item key="6">
+        <Menu.Item key="5">
           <NavLink to="/profile">
             <span
               className="icon"
@@ -249,10 +250,10 @@ function Sidenav({ color }) {
             <span className="label">Perfil</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item className="menu-item-header" key="5">
+        <Menu.Item className="menu-item-header" key="11">
           Administrativas
         </Menu.Item>
-        <Menu.Item key="6">
+        <Menu.Item key="7">
           <NavLink to="/usuarios">
             <span
               className="icon"

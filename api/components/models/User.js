@@ -47,7 +47,6 @@ dataSchema.pre('save', async function(next){
     if(!this.isModified('password'))
         next()
     
-    console.log('llega aqui')
     this.password = await bcrypt.hash(this.password, 10)
  });
 

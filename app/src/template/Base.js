@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import Router from '../router'
-import Menu from '../components/Menu'
 import Copyright from '../components/Copyright'
 
 import { useAuth } from '../auth';
@@ -41,7 +40,6 @@ function DashboardContent({ token, logout}) {
           <div className="logo">
              <img width={'90%'} src={require('../assets/image/enpa.png')}/>
           </div>
-          <Menu />
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>

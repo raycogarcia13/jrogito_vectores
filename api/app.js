@@ -20,6 +20,8 @@ app.use(cookieParser())
 app.use('/api/v1',require('./components/router/auth'))
 // users
 app.use('/api/v1',require('./components/router/users'))
+// vectores
+app.use('/api/v1',require('./components/router/vector'))
     
 //statics files
 // app.use(express.static(path.join(__dirname, "public")));

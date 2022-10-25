@@ -25,6 +25,7 @@ import {api} from '../config/axios'
 
 export default function DataTable() {
   const [open, setOpen] = React.useState(false);
+  const [open_delete, setOpenDelete] = React.useState(false);
   const [data,setData] = React.useState([])
   const [nuevo,setNuevo] = React.useState({})
   const [action,setAction] = React.useState("Nuevo")
@@ -36,16 +37,22 @@ export default function DataTable() {
 
   const columns = [
     { dataIndex: 'name', key: 'name', title: 'Nombre' },
+    { dataIndex: 'email', key: 'email', title: 'Correo' },
+    { dataIndex: 'role', key: 'role', title: 'Rol' },
     {
       key:'actions', title:'...',
       render: (item)=>{
         return (
            <Space>
             <Tooltip title="Editar">
-              <Button onClick={()=>editOpen(item)} icon={<EditOutlined />} />
+              <Button onClick={()=>editOpen(item)} >
+                <EditOutlined />  
+              </Button>
             </Tooltip>
             <Tooltip title="Eliminar">
-              <Button onClick={()=>editOpen(item)} type="danger" icon={<DeleteOutlined />} />
+              <Button onClick={()=>deleteOpen(item)} type="danger" >
+                <DeleteOutlined />
+              </Button>
             </Tooltip>
             
           </Space>
@@ -66,10 +73,20 @@ export default function DataTable() {
     setOpen(true);
   };
 
+  const deleteOpen = async (item) => {
+    setId(item._id);
+    setOpenDelete(true);
+  };
+
   const handleClose = () => {
     setNuevo({})
     form.resetFields();
     setOpen(false);
+    setStatus('');
+  };
+
+  const handleCloseD = () => {
+    setOpenDelete(false);
     setStatus('');
   };
 
@@ -80,7 +97,7 @@ export default function DataTable() {
       api.post(uri,values).then(res=>{
         loadData();
         setStatus('recived');
-        message.success('Departamento Insertado correctamente')
+        message.success('Usuario Insertado correctamente')
         handleClose();
       }).catch(err=>{
         message.error(err.message)
@@ -90,12 +107,23 @@ export default function DataTable() {
       api.put(uri,values).then(res=>{
         loadData();
         setStatus('recived');
-        message.success('Departamento actualizado correctamente')
+        message.success('Usuario actualizado correctamente')
         handleClose();
       }).catch(err=>{
         message.error(err.message)
       })
     }
+  }
+
+  const deleteUser = ()=>{
+    console.log('ss')
+    setStatus('loading')
+    const uri = `/users/${id}`;
+    api.delete(uri).then(res=>{
+      setStatus('recived')
+      loadData();
+      handleCloseD();
+    })
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -135,10 +163,29 @@ export default function DataTable() {
             columns={columns}
           />
 
-
         <Modal
-          title={`${action} cliente`}
-          visible={open}
+          title={`Eliminar usuario`}
+          open={open_delete}
+          confirmLoading={loading()}
+          okText="Enviar"
+          onCancel={handleClose}
+          cancelText="Cancelar"
+          footer={
+            <>
+              <Button key="btnclose" onClick={handleCloseD}>
+                  Cancelar
+              </Button>
+              <Button type='primary' onClick={deleteUser} loading={loading()} key="btnsubmit" htmlType="submit">
+                  Enviar
+              </Button>
+            </>
+            }
+          >
+            Está seguro de querer eliminar este usuario
+        </Modal>
+        <Modal
+          title={`${action} usuario`}
+          open={open}
           confirmLoading={loading()}
           okText="Enviar"
           onCancel={handleClose}
@@ -165,11 +212,24 @@ export default function DataTable() {
               autoComplete="on"
             >
               <Form.Item
-                label="Departamento"
+                label="Nombre"
                 name="name"
-                rules={[{ required: true, message: 'Debe insertar el servicio!' }]}
+                rules={[{ required: true, message: 'Debe insertar el nombre!' }]}
               >
                 <Input />
+              </Form.Item>
+              <Form.Item
+                label="Correo"
+                name="email"
+                rules={[{ required: true, message: 'Debe insertar el correo!' }]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Contraseña"
+                name="password"
+              >
+                <Input.Password />
               </Form.Item>
             </Form>
         </Modal>
