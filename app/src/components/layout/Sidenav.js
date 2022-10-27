@@ -186,7 +186,7 @@ function Sidenav({ color }) {
             <span className="label">Inicio</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="2">
+        {/* <Menu.Item key="2">
           <NavLink to="/tables">
             <span
               className="icon"
@@ -198,7 +198,7 @@ function Sidenav({ color }) {
             </span>
             <span className="label">Tables</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
 
         <Menu.Item className="menu-item-header" key="14">
           Mapa
@@ -213,7 +213,7 @@ function Sidenav({ color }) {
             >
               {<HeatMapOutlined />}
             </span>
-            <span className="label">Mapa de vectores</span>
+            <span className="label">Mapa de estratificación</span>
           </NavLink>
         </Menu.Item>
 
@@ -247,7 +247,7 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
 
-        <Menu.Item className="menu-item-header" key="12">
+        {/* <Menu.Item className="menu-item-header" key="12">
           Nomencladores
         </Menu.Item>
         <Menu.Item key="5">
@@ -262,7 +262,7 @@ function Sidenav({ color }) {
             </span>
             <span className="label">Perfil</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item className="menu-item-header" key="11">
           Administrativas
         </Menu.Item>

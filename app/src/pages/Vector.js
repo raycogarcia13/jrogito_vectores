@@ -97,6 +97,7 @@ export default function DataTable() {
 
   const editOpen = async (item) => {
     setId(item._id);
+    setSelectedPosition(item.latlong)
     form.setFieldsValue(item);
     setAction('Editar')
     setOpen(true);

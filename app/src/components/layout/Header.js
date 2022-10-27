@@ -136,11 +136,6 @@ function Header({
             <span>{user.name}</span>
           </Link>
         </Dropdown>
-          <Input
-            className="header-search"
-            placeholder="Type here..."
-            prefix={<SearchOutlined />}
-          />
         </Col>
       </Row>
     </>

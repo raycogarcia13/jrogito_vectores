@@ -19,6 +19,7 @@ const dataSchema = new Schema({
     },
     poblado:{type: String},
     larvas:{type: Boolean, default:false},
+    activo:{type: Boolean, default:true},
     latlong:[Number],
     createdAt:{
         type: Date,

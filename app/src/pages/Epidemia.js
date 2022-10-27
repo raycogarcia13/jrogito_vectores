@@ -27,6 +27,7 @@ import {
 } from '@ant-design/icons';
 
 import {api} from '../config/axios'
+import moment from 'moment';
 
 import { MapContainer, Marker, Popup, TileLayer,useMap, useMapEvents } from 'react-leaflet'
 import L,{ latLng } from "leaflet";
@@ -84,6 +85,10 @@ export default function DataTable() {
 
   const editOpen = async (item) => {
     setId(item._id);
+    setSelectedPosition(item.latlong)
+    item.fecha_primera = moment(item.fecha_primera);
+    item.fecha_muestra = moment(item.fecha_muestra);
+    item.fecha_suma = moment(item.fecha_suma);
     form.setFieldsValue(item);
     setAction('Editar')
     setOpen(true);
@@ -232,7 +237,11 @@ const openNotification = (type,title,text) => {
                 <Form.Item
                   label="Carnet de Identidad"
                   name="carnet"
-                  rules={[{ required: true, message: 'Debe insertar el carnet!' }]}
+                  rules={[
+                    { required: true, message: 'Debe insertar el carnet!' },
+                    { min: 11, message: 'Debe tener 11 caracteres.' },
+                    { max: 11, message: 'Debe tener 11 caracteres.' },
+                  ]}
                 >
                 <Input type='number'/>
               </Form.Item>

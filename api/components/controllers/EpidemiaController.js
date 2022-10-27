@@ -20,13 +20,24 @@ exports.create = catchAsyncErrors(async (req,res,next) =>{
     
     const {carnet} = req.body;
     
-    
+    const siglo = carnet.charAt(6);
+    let year;
+    if(siglo == 9)
+        year = 1800;
+    else if(siglo<=5)
+        year = 1900;
+    else
+        year = 2000;
 
+    const year_l = carnet.substr(0,2);
+    year+=parseInt(year_l);
+    const y_now = new Date().getFullYear();
+    req.body.edad = y_now - year;  
     const data = await Epidemia.create(req.body);
 
     return res.json({
         status:"success",
-        data
+        // data
     })
 })
 

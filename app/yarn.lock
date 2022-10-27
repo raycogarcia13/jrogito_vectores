@@ -1626,6 +1626,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@ozangokhanhergul/leaflet.heat@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@ozangokhanhergul/leaflet.heat/-/leaflet.heat-0.4.0.tgz#f01eeecec6c0a6c01b52483d689194bfaedd21db"
+  integrity sha512-Y2zReNQ1b5iY8EmNOs7OkVmPDqd6HeExu1RX3HFPbSKvFVdQ9PZWRCkNzUN4szgBvPuFVUmlN6QWqFdIsBkE6g==
+
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.5.7.tgz#58f8217ba70069cc6a73f5d7e05e85b458c150e2"
@@ -6136,6 +6141,11 @@ leaflet-heatmap@latest:
     heatmap.js "*"
     leaflet "*"
 
+leaflet-html-legend@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/leaflet-html-legend/-/leaflet-html-legend-0.3.5.tgz#7ce640511f1a7a54839ed98e21e726e088cee09c"
+  integrity sha512-jYcyug00Ky9HwZhWpy/HFC8nOXXTLuWcQqyBL1YX5qmnMyBctcPUYx+U6STHgP8vcejx6N0C3TrV3JAEgfrYlw==
+
 leaflet@*:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.8.0.tgz#4615db4a22a304e8e692cae9270b983b38a2055e"
@@ -6276,12 +6286,12 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
-lodash.filter@^4.3.0, lodash.filter@latest:
+lodash.filter@latest:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.filter/-/lodash.filter-4.6.0.tgz#668b1d4981603ae1cc5a6fa760143e480b4c4ace"
   integrity sha512-pXYUy7PR8BCLwX5mgJ/aNtyOvuJTdZAo9EQFUvMIYugqmJxnrYaANvTbgndOzHSCSR0wnlBBfRXJL5SbWxo3FQ==
 
-lodash.foreach@^4.2.0, lodash.foreach@latest:
+lodash.foreach@latest:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.foreach/-/lodash.foreach-4.5.0.tgz#1a6a35eace401280c7f06dddec35165ab27e3e53"
   integrity sha512-aEXTF4d+m05rVOAUG3z4vZZ4xVexLKZGF0lIxuHZ1Hplpk/3B6Z1+/ICICYRLm7c41Z2xiejbkCkJoTlypoXhQ==
@@ -6296,7 +6306,7 @@ lodash.isarray@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
   integrity sha512-JwObCrNJuT0Nnbuecmqr5DgtuBppuCvGD9lxjFpAzwnVtdGoDQ1zig+5W8k5/6Gcn0gZ3936HDAlGd28i7sOGQ==
 
-lodash.isnumber@^3.0.3, lodash.isnumber@latest:
+lodash.isnumber@latest:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz#3ce76810c5928d03352301ac287317f11c0b1ffc"
   integrity sha512-QYqzpfwO3/CWf3XP+Z+tkQsfaLL/EnUlXWVkIk5FUPc4sBdTehEqZONuyRt2P67PXAk+NXmTBcc97zw9t1FQrw==
@@ -6326,12 +6336,12 @@ lodash.map@^3.0.0:
     lodash.isarray "^3.0.0"
     lodash.keys "^3.0.0"
 
-lodash.map@^4.3.0, lodash.map@latest:
+lodash.map@latest:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
   integrity sha512-worNHGKLDetmcEYDvh2stPCrrQRkP20E4l0iIS7F8EvzMqBBi7ltvFN5m1HvTf1P7Jk1txKhvFcmYsCr8O2F1Q==
 
-lodash.max@^4.0.0, lodash.max@latest:
+lodash.max@latest:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.max/-/lodash.max-4.0.1.tgz#8735566c618b35a9f760520b487ae79658af136a"
   integrity sha512-iykTDTb7PK33HSQmKy34zv+hh4WEu7WonJPXQcgODzUbbtradtNs8RsD/GI7XV++60KaKR1xhW56N4ISqHesfQ==
@@ -6346,7 +6356,7 @@ lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
-lodash.min@^4.0.0, lodash.min@latest:
+lodash.min@latest:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.min/-/lodash.min-4.0.1.tgz#4ac1b9a8baf8b6d28a690d716512510cfc14708c"
   integrity sha512-evqGbKKpUlPcSIMoPamfAEL2byHsyzQjgj67Mw3sInyNO3Q3vytHKkoXbWOgOONY1Mmj6vPHlL9JDJFTZ0DTUA==
@@ -6358,7 +6368,7 @@ lodash.pairs@^3.0.0:
   dependencies:
     lodash.keys "^3.0.0"
 
-lodash.pluck@^3.1.2, lodash.pluck@latest:
+lodash.pluck@latest:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/lodash.pluck/-/lodash.pluck-3.1.2.tgz#b347f0374c0169f0eeb04d672d89cec8632c2231"
   integrity sha512-L0UkqH/O3Vh+3KowchOe2+YzWMGdR90CbzpzTXGMujZAVfBmjGSvaJwpflJa4C/WNhNvLrlCtMjo6/Uvhty67g==
@@ -6368,7 +6378,7 @@ lodash.pluck@^3.1.2, lodash.pluck@latest:
     lodash.isarray "^3.0.0"
     lodash.map "^3.0.0"
 
-lodash.reduce@^4.3.0, lodash.reduce@latest:
+lodash.reduce@latest:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.reduce/-/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
   integrity sha512-6raRe2vxCYBhpBu+B+TtNGUzah+hQjVdu3E17wfusjyrXBka2nBS8OH/gjVZ5PvHOhWmIZTYri09Z6n/QfnNMw==
@@ -6562,7 +6572,7 @@ mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-moment@^2.24.0, moment@^2.29.2:
+moment@^2.24.0, moment@^2.29.2, moment@^2.29.4:
   version "2.29.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
@@ -8140,20 +8150,10 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-leaflet-heatmap-layer@latest:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-leaflet-heatmap-layer/-/react-leaflet-heatmap-layer-2.0.0.tgz#f14825d7cd53cc9115a11e85d7bec6a388321750"
-  integrity sha512-mgzXLPASseUtHpzK9P34cOiJeC3C/rL1/3Pcmc67HFEhutCr7EumUtlbBaPToEdlRjrTqIo4N6ANdLm9keVnYQ==
-  dependencies:
-    lodash.filter "^4.3.0"
-    lodash.foreach "^4.2.0"
-    lodash.isnumber "^3.0.3"
-    lodash.map "^4.3.0"
-    lodash.max "^4.0.0"
-    lodash.min "^4.0.0"
-    lodash.pluck "^3.1.2"
-    lodash.reduce "^4.3.0"
-    simpleheat "^0.4.0"
+react-leaflet-custom-control@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/react-leaflet-custom-control/-/react-leaflet-custom-control-1.3.1.tgz#41ebf71928ce1489984f7bce8f17693f93c6606f"
+  integrity sha512-7nmSIglW4NHXmAvEC7VUCi1wopc6n7HZaipKYRWPenFh2e8bW0wPqL3BlnEcAsHD5i5BLmbCWjP6Pj6aweT+/g==
 
 react-leaflet@latest:
   version "4.1.0"
@@ -8731,7 +8731,7 @@ signal-exit@^3.0.2, signal-exit@^3.0.3:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
-simpleheat@^0.4.0, simpleheat@latest:
+simpleheat@latest:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/simpleheat/-/simpleheat-0.4.0.tgz#e2de8d4548fcf1a6960b636bfa939d05bcd49a7b"
   integrity sha512-tdg3I1NvzMdPKscWBrHbF0LBf+VWuBBazzGUPtFJjG5Q12VQX6gPY8jLy9hx5CbgAIVc5nfnePwJvAYK6z1rAA==

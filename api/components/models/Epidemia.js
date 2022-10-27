@@ -41,6 +41,7 @@ const dataSchema = new Schema({
         enum:['NEGATIVO','POSITIVO'],
         default: "NEGATIVO"
     },
+    date_until:{type: Date, default: +new Date() + 30*24*60*60*1000},
     createdAt:{
         type: Date,
         default: Date.now()
