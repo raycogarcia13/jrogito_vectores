@@ -13,9 +13,12 @@ const dataSchema = new Schema({
     entre2:{
         type: String,
     },
+    manzana:{type: Number},
     descripcion:{
         type: String,
     },
+    poblado:{type: String},
+    larvas:{type: Boolean, default:false},
     latlong:[Number],
     createdAt:{
         type: Date,

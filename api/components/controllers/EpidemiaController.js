@@ -2,12 +2,12 @@ const ErrorHandler = require("../../utils/errorHandler");
 const catchAsyncErrors = require("../../middlewares/catchAsyncErrors")
 const bcrypt = require('bcryptjs')
 
-const Vector = require('../models/Vector')
+const Epidemia = require('../models/Epidemia')
 
 //get  =>[Get]/api/v1/matrix_reference
 exports.all = catchAsyncErrors(async (req,res,next) =>{
 
-    const all = await Vector.find();
+    const all = await Epidemia.find();
 
     return res.json({
         status:"success",
@@ -18,7 +18,11 @@ exports.all = catchAsyncErrors(async (req,res,next) =>{
 //get  =>[Get]/api/v1/matrix_reference
 exports.create = catchAsyncErrors(async (req,res,next) =>{
     
-    const data = await Vector.create(req.body);
+    const {carnet} = req.body;
+    
+    
+
+    const data = await Epidemia.create(req.body);
 
     return res.json({
         status:"success",
@@ -30,7 +34,7 @@ exports.create = catchAsyncErrors(async (req,res,next) =>{
 exports.update = catchAsyncErrors(async (req,res,next) =>{
     const {id } = req.params;
     
-    let user = await Vector.findOneAndUpdate({_id:id},req.body);
+    let user = await Epidemia.findOneAndUpdate({_id:id},req.body);
 
     return res.json({
         status:"success",
@@ -44,7 +48,7 @@ exports.remove = catchAsyncErrors(async (req,res,next) =>{
     
     console.log(id);
 
-    await Vector.findByIdAndDelete(id);
+    await Epidemia.findByIdAndDelete(id);
 
     return res.json({
         status:"success",

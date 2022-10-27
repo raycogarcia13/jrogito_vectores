@@ -4,6 +4,7 @@ import {
   Table, 
   Modal,
   message,
+  DatePicker,
   Space, 
   Card, 
   Divider, 
@@ -12,10 +13,9 @@ import {
   Form,
   Input,
   Tooltip,
-  Switch,
   Row, 
   Col,
-  Tag,
+  Select,
   notification
 } from 'antd';
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -28,10 +28,10 @@ import {
 
 import {api} from '../config/axios'
 
-
 import { MapContainer, Marker, Popup, TileLayer,useMap, useMapEvents } from 'react-leaflet'
 import L,{ latLng } from "leaflet";
 const { TextArea } = Input;
+const { Option } = Select;
 const Context = React.createContext({ name: 'Default' });
 
 export default function DataTable() {
@@ -52,18 +52,11 @@ export default function DataTable() {
   const [status,setStatus] = React.useState('')
 
   const columns = [
-    { dataIndex: 'calle', key: 'calle', title: 'Calle' },
-    { dataIndex: 'entre1', key: 'entre1', title: 'Entre 1' },
-    { dataIndex: 'entre2', key: 'entre2', title: 'Entre 2' },
-    { dataIndex: 'manzana', key: 'manzana', title: 'Manzana' },
-    { dataIndex: 'larvas', key: 'larvas', title: 'Vector',render: vec => (
-      <span>
-          <Tag color={vec?'red':'green'} >
-            { vec ? 'SI' : 'NO' }
-          </Tag>
-      </span>
-    ), },
-    { dataIndex: 'descripcion', key: 'descripcion', title: 'Descripción' },
+    { dataIndex: 'codigo', key: 'codigo', title: 'Código' },
+    { dataIndex: 'nombre', key: 'nombre', title: 'Paciente' },
+    { dataIndex: 'edad', key: 'edad', title: 'Edad' },
+    { dataIndex: 'centro', key: 'centro', title: 'Centro' },
+    { dataIndex: 'resultado', key: 'resultado', title: 'Resultado' },
     {
       key:'actions', title:'...',
       render: (item)=>{
@@ -74,12 +67,6 @@ export default function DataTable() {
                 <EditOutlined />  
               </Button>
             </Tooltip>
-            <Tooltip title="Eliminar">
-              <Button onClick={()=>deleteOpen(item)} type="danger" >
-                <DeleteOutlined />
-              </Button>
-            </Tooltip>
-            
           </Space>
         )
       }
@@ -111,8 +98,6 @@ export default function DataTable() {
     setNuevo({})
     form.resetFields();
     setStatus('');
-    setSelectedPosition([0,0])
-    setAction('nuevo');
   };
 
   const handleCloseD = () => {
@@ -121,43 +106,33 @@ export default function DataTable() {
   };
 
   const submitForm = async (values) =>{
-    if(values.larvas && selectedPosition[0]==0){
+    if(values.resultado == 'POSITIVO' && selectedPosition[0]==0){
       openNotification('error','Faltan datos', 'Debe escoger le punto de geolocaalización, ya que la automática no se ha podido completar')
       return;
     }
     setStatus('loading');
     values.latlong = selectedPosition;
     if(action=='Nuevo'){
-      const uri = "/vector";
+      const uri = "/epidemia";
       api.post(uri,values).then(res=>{
         loadData();
         setStatus('recived');
-        message.success('Vector Insertado correctamente')
+        message.success('Igm Insertado correctamente')
         handleClose();
       }).catch(err=>{
         message.error(err.message)
       })
     }else{
-      const uri = `/vector/${id}`;
+      const uri = `/epidemia/${id}`;
       api.put(uri,values).then(res=>{
         loadData();
         setStatus('recived');
-        message.success('Vector actualizado correctamente')
+        message.success('Igm actualizado correctamente')
         handleClose();
       }).catch(err=>{
         message.error(err.message)
       })
     }
-  }
-
-  const deleteUser = ()=>{
-    setStatus('loading')
-    const uri = `/vector/${id}`;
-    api.delete(uri).then(res=>{
-      setStatus('recived')
-      loadData();
-      handleCloseD();
-    })
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -167,7 +142,7 @@ export default function DataTable() {
   };
 
   const loadData = ()=>{
-    api.get('/vector').then(res=>{
+    api.get('/epidemia').then(res=>{
       const d = res.data.data; 
       setData(d.map((it)=>{return {...it,key:it._id}}))
     })
@@ -214,36 +189,16 @@ const openNotification = (type,title,text) => {
   return (
     <>
      <Row>
-     <Col span={12}>
+     <Col span={6}>
         <Card>
         <div style={{display:'flex', justifyContent:'space-between'}}>
                 <Typography.Title level={5} style={{ margin: 0 }}>
                   <ContainerOutlined style={{marginRight:10}}/>
-                  {action} Vector
+                  {action} IGM
                 </Typography.Title>
             </div>
             <Divider />
 
-            <Modal
-              title={`Eliminar vector`}
-              open={open_delete}
-              confirmLoading={loading()}
-              okText="Enviar"
-              onCancel={handleClose}
-              cancelText="Cancelar"
-              footer={
-                <>
-                  <Button key="btnclose" onClick={handleCloseD}>
-                      Cancelar
-                  </Button>
-                  <Button type='primary' onClick={deleteUser} loading={loading()} key="btnsubmit" htmlType="submit">
-                      Enviar
-                  </Button>
-                </>
-                }
-              >
-                Está seguro de querer eliminar este vector
-            </Modal>
           <Form
             form={form}
             name="basic"
@@ -253,59 +208,74 @@ const openNotification = (type,title,text) => {
             onFinishFailed={onFinishFailed}
             autoComplete="on"
           >
-            <Row align='center'>
-              <Col offset={1}>
                 <Form.Item
-                  label="Calle"
-                  name="calle"
-                  rules={[{ required: true, message: 'Debe insertar la calle' }]}
+                  label="Código suma"
+                  name="codigo"
+                  rules={[{ required: true, message: 'Debe insertar el código' }]}
                 >
                   <Input />
                 </Form.Item>
-              </Col>
-              <Col offset={1}>
                 <Form.Item
-                label="Entre 1"
-                name="entre1"
-                rules={[{ required: true, message: 'Debe insertar la calle!' }]}
+                label="Nombre"
+                name="nombre"
+                rules={[{ required: true, message: 'Debe insertar el nombre!' }]}
               >
                 <Input />
               </Form.Item>
-              </Col>
-              <Col offset={1}>
+              <Form.Item
+                  label="Dirección"
+                  name="direccion"
+                  rules={[{ required: true, message: 'Debe insertar la dirección' }]}
+                >
+                  <TextArea autoSize={{ minRows: 3, maxRows: 5 }}/>
+                </Form.Item>
                 <Form.Item
-                label="Entre 2"
-                name="entre2"
-                rules={[{ required: true, message: 'Debe insertar la calle!' }]}
-              >
-                <Input />
-              </Form.Item>
-              </Col>
-              <Col offset={1}>
-                <Form.Item
-                label="Manzana"
-                name="manzana"
-                rules={[{ required: true, message: 'Debe insertar la manzana!' }]}
-              >
+                  label="Carnet de Identidad"
+                  name="carnet"
+                  rules={[{ required: true, message: 'Debe insertar el carnet!' }]}
+                >
                 <Input type='number'/>
               </Form.Item>
-              </Col>
-              <Col offset={1}>
-                <Form.Item
-                label="Existe vector"
-                name="larvas"
-                valuePropName="checked"
-              >
-                <Switch checkedChildren="SI" unCheckedChildren="NO"/>
+              <Form.Item
+                  label="Fecha primeros síntomas"
+                  name="fecha_primera"
+                  rules={[{ required: true, message: 'Debe insertar la fecha!' }]}
+                >
+                <DatePicker style={{ width: '100%' }}/>
               </Form.Item>
-              </Col>
-            </Row>
-            <Form.Item
-                label="Descripción"
-                name="descripcion"
-                rules={[{ required: true, message: 'Debe insertar la descripción' }]}
-              >
-                <TextArea autoSize={{ minRows: 3, maxRows: 5 }}/>
+              <Form.Item
+                  label="Fecha de la toma de la muestra"
+                  name="fecha_muestra"
+                  rules={[{ required: true, message: 'Debe insertar la fecha!' }]}
+                >
+                <DatePicker style={{ width: '100%' }}/>
+              </Form.Item>
+              <Form.Item
+                  label="Centro / Hospital"
+                  name="centro"
+                >
+                <Select defaultValue="Hospital">
+                  <Option value="Hospital">Hospital</Option>
+                  <Option value="Policlínico 1">Policlínico 1</Option>
+                  <Option value="Policlínico 2">Policlínico 2</Option>
+                  <Option value="Policlínico 3">Policlínico 3</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                  label="Fecha de salida del suma"
+                  name="fecha_suma"
+                  rules={[{ required: true, message: 'Debe insertar la fecha!' }]}
+                >
+                <DatePicker style={{ width: '100%' }}/>
+              </Form.Item>
+              <Form.Item
+                  label="Resultado"
+                  name="resultado"
+                >
+                <Select defaultValue="NEGATIVO">
+                  <Option value="POSITIVO">POSITIVO</Option>
+                  <Option value="NEGATIVO">NEGATIVO</Option>
+                </Select>
               </Form.Item>
            <Divider />
           <MapContainer 
@@ -332,12 +302,12 @@ const openNotification = (type,title,text) => {
 
         </Card>
       </Col>
-      <Col span={11} offset={1}>
+      <Col span={16} offset={1}>
           <Card style={{ width: '100%',paddingBottom:'10vh' }}>
             <div style={{display:'flex', justifyContent:'space-between'}}>
                 <Typography.Title level={5} style={{ margin: 0 }}>
                   <ContainerOutlined style={{marginRight:10}}/>
-                  Puntos de vectores
+                  Registro de IGM
                 </Typography.Title>
             </div>
 

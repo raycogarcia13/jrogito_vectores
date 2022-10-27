@@ -22,6 +22,8 @@ app.use('/api/v1',require('./components/router/auth'))
 app.use('/api/v1',require('./components/router/users'))
 // vectores
 app.use('/api/v1',require('./components/router/vector'))
+// epidemia
+app.use('/api/v1',require('./components/router/epidemia'))
     
 //statics files
 // app.use(express.static(path.join(__dirname, "public")));

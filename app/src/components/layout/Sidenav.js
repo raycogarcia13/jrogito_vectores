@@ -225,12 +225,25 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "profile" ? color : "",
+                background: page === "vector" ? color : "",
               }}
             >
             <DatabaseOutlined />
             </span>
             <span className="label">Vectores</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="4">
+          <NavLink to="/epidemia">
+            <span
+              className="icon"
+              style={{
+                background: page === "epidemia" ? color : "",
+              }}
+            >
+            <DatabaseOutlined />
+            </span>
+            <span className="label">Epidemiología</span>
           </NavLink>
         </Menu.Item>
 
