@@ -7,7 +7,7 @@ const Epidemia = require('../models/Epidemia')
 //get  =>[Get]/api/v1/matrix_reference
 exports.all = catchAsyncErrors(async (req,res,next) =>{
 
-    const all = await Epidemia.find();
+    const all = await Epidemia.find().populate('tipo')
 
     return res.json({
         status:"success",
@@ -33,6 +33,7 @@ exports.create = catchAsyncErrors(async (req,res,next) =>{
     year+=parseInt(year_l);
     const y_now = new Date().getFullYear();
     req.body.edad = y_now - year;  
+    req.body.sexo = parseInt(carnet.substr(9,1))%2==0?'Masculino':'Femenino';  
     const data = await Epidemia.create(req.body);
 
     return res.json({

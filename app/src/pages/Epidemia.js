@@ -15,6 +15,7 @@ import {
   Tooltip,
   Row, 
   Col,
+  Tag,
   Select,
   notification
 } from 'antd';
@@ -34,6 +35,7 @@ import L,{ latLng } from "leaflet";
 const { TextArea } = Input;
 const { Option } = Select;
 const Context = React.createContext({ name: 'Default' });
+const { Text } = Typography;
 
 export default function DataTable() {
   L.Marker.prototype.options.icon = L.icon({ iconUrl: icon })
@@ -43,6 +45,7 @@ export default function DataTable() {
   const [data,setData] = React.useState([])
   const [nuevo,setNuevo] = React.useState({})
   const [action,setAction] = React.useState("Nuevo")
+  const [tipos,setTipos] = React.useState([])
 
   const [initialPosition, setInitialPosition] = React.useState([0,0]);
   const [selectedPosition, setSelectedPosition] = React.useState([0,0]);
@@ -56,7 +59,15 @@ export default function DataTable() {
     { dataIndex: 'codigo', key: 'codigo', title: 'Código' },
     { dataIndex: 'nombre', key: 'nombre', title: 'Paciente' },
     { dataIndex: 'edad', key: 'edad', title: 'Edad' },
+    { dataIndex: 'sexo', key: 'sexo', title: 'Sexo' },
     { dataIndex: 'centro', key: 'centro', title: 'Centro' },
+    { dataIndex: 'tipo', key: 'tipo', title: 'Enfermedad', render:(item)=>{
+      return (
+        <Space>
+           <Tag color={item.color}>{item.tipo}</Tag>
+        </Space>
+      )
+    } },
     { dataIndex: 'resultado', key: 'resultado', title: 'Resultado' },
     {
       key:'actions', title:'...',
@@ -152,9 +163,16 @@ export default function DataTable() {
       setData(d.map((it)=>{return {...it,key:it._id}}))
     })
   }
+  const loadTipos = ()=>{
+    api.get('/nomenclador/tipos_e').then(res=>{
+      const d = res.data.data; 
+      setTipos(d);
+    })
+  }
 
   React.useEffect( ()=>{
     loadData();
+    loadTipos();
   },[] )
 
   const loading = ()=>{
@@ -214,7 +232,7 @@ const openNotification = (type,title,text) => {
             autoComplete="on"
           >
                 <Form.Item
-                  label="Código suma"
+                  label="Código"
                   name="codigo"
                   rules={[{ required: true, message: 'Debe insertar el código' }]}
                 >
@@ -226,6 +244,14 @@ const openNotification = (type,title,text) => {
                 rules={[{ required: true, message: 'Debe insertar el nombre!' }]}
               >
                 <Input />
+              </Form.Item>
+              <Form.Item
+                  label="Tipo de enfermedad"
+                  name="tipo"
+                >
+                <Select>
+                  {tipos.map(it=><Option value={it._id}>{it.tipo}</Option>)}
+                </Select>
               </Form.Item>
               <Form.Item
                   label="Dirección"
@@ -271,7 +297,7 @@ const openNotification = (type,title,text) => {
                 </Select>
               </Form.Item>
               <Form.Item
-                  label="Fecha de salida del suma"
+                  label="Fecha de salida del resultado"
                   name="fecha_suma"
                   rules={[{ required: true, message: 'Debe insertar la fecha!' }]}
                 >

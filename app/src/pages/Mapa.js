@@ -6,22 +6,34 @@ import {
   Typography, 
   Row,
   Col,
-  Avatar
+  Avatar,
+  Button
 } from 'antd';
 
-import { MapContainer, Marker, Popup, TileLayer,useMap, useMapEvents } from 'react-leaflet'
+import { MapContainer, Marker, Popup, TileLayer,useMap, useMapEvents, GeoJSON } from 'react-leaflet'
 import Control from 'react-leaflet-custom-control'
 import L,{ latLng } from "leaflet";
 import {api} from '../config/axios'
 import icon from 'leaflet/dist/images/marker-icon.png';
 import 'leaflet/dist/leaflet.css'
+import 'leaflet-geosearch/dist/geosearch.css'
 import '@ozangokhanhergul/leaflet.heat'
+import {viales} from "../datas/viales"
+import hash from 'object-hash';
+
+import { GeoSearchControl,OpenStreetMapProvider } from 'leaflet-geosearch';
+
+
+L.Marker.prototype.options.icon = L.icon({ iconUrl: icon })
+
+// setup
+const provider = new OpenStreetMapProvider();
 
 export default function DataTable() {
-  L.Marker.prototype.options.icon = L.icon({ iconUrl: icon })
   const [data, setData] = useState([]);
   const [data_v, setDataV] = useState([]);
   const [dengue, setPoints] = useState([]);
+  const [virus, setVirus] = useState([]);
   const [vector, setVector] = useState([]);
 
   useEffect( ()=>{
@@ -36,6 +48,26 @@ export default function DataTable() {
           return it.latlong
       })
       setPoints(points)
+
+      let all = [];
+      d.forEach( it=>{
+        if(it=>it.latlong!=null){
+          const index = all.findIndex(i=>i.tipo == it.tipo.tipo)
+          if(index==-1){
+            const t = {
+              latlong: [],
+              tipo: it.tipo.tipo,
+              color:it.tipo.color
+            }
+            t.latlong.push(it.latlong);
+            all.push(t);
+          }else{
+            all[index].latLng.push(it.latlong);
+          }
+        }
+    })
+    setVirus(all);
+
     })
     api.get('/vector').then(res=>{
       const d = res.data.data; 
@@ -48,6 +80,16 @@ export default function DataTable() {
 
   }
 
+  const searchControl = new GeoSearchControl({
+    provider: provider,
+    marker: {
+      icon: L.icon({ iconUrl: icon }),
+      draggable: false,
+    },
+    searchLabel: 'Buscar dirección', 
+    style:'bar'
+  });
+
   const Markers = () => {
 
     const markers = data.map(it=>{
@@ -56,15 +98,34 @@ export default function DataTable() {
 
     const map = useMap();
 
-    L.heatLayer(dengue,{radius: 25, gradient:{1: 'red'},blur:15, minOpacity:0.3}).addTo(map);
+    virus.map(it=>{
+      console.log(it)
+      L.heatLayer(it.latlong,{radius: 25, gradient:{1: it.color},blur:15, minOpacity:0.3}).addTo(map);
+    })
+    console.log(vector)
     L.heatLayer(vector,{radius: 25, gradient:{1: 'blue'},blur:15, minOpacity:0.3}).addTo(map);
-
 
     return (
         <>
         {/* {markers} */}
         </>
     )   
+}
+
+const SearchField = ({ apiKey }) => {
+
+  const map = useMap();
+  useEffect(() => {
+    map.addControl(searchControl);
+    return () => map.removeControl(searchControl);
+  }, []);
+
+  return null;
+};
+
+const click = async ()=>{
+    const results = await provider.search({ query: "Calle 45 / 30 y 32 Nueva Gerona" });
+    console.log(results); 
 }
 
   return (
@@ -82,7 +143,7 @@ export default function DataTable() {
             url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
           />
           <Markers />
-
+          {/* <GeoJSON key={hash('jp;a')} style={{ fillColor: "#ff7800",color: "rgba(3,3,3,0.1)"}} data={viales} /> */}
           <Control prepend position='bottomright'>
             <Card color='inherit'> 
               <div style={{display:'flex', justifyContent:'space-between'}}>
@@ -90,15 +151,19 @@ export default function DataTable() {
                       Leyenda
                   </Typography.Title>
               </div>
-              <Row>
-                  <Col><Avatar size={20} style={{ color: 'white', backgroundColor: 'red', opacity:0.5 }}></Avatar> IGM positivos</Col>
-              </Row>
+                  {virus.map(it=>{
+                    return (
+                      <Row>
+                        <Col><Avatar size={20} style={{ color: 'white', backgroundColor: it.color, opacity:0.5 }}></Avatar> {it.tipo}</Col>
+                      </Row>
+                    )
+                  })}
               <Row>
                   <Col><Avatar size={20} style={{ color: 'white', backgroundColor: 'blue', opacity:0.5 }}></Avatar> Vectores</Col>
               </Row>
             </Card>
           </Control>
-
+          {<SearchField  />}
         </MapContainer>
 
 

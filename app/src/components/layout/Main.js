@@ -30,6 +30,9 @@ function Main({ token, logout}) {
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
 
+  if(pathname == 'nomenclador_tipo')
+    pathname = "Tipos de epidemia"
+
   useEffect(() => {
     if (pathname === "rtl") {
       setPlacement("left");

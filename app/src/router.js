@@ -27,6 +27,7 @@ const Vector = lazy( ()=>import('./pages/Vector') )
 const Epidemia = lazy( ()=>import('./pages/Epidemia') )
 const Users = lazy( ()=>import('./pages/Users') )
 const Mapa = lazy( ()=>import('./pages/Mapa') )
+const TipoE = lazy( ()=>import('./pages/TipoEpidemia') )
 const E404 = lazy( ()=>import('./pages/404') )
 
 const HomeC = NewHOC(Home);
@@ -43,6 +44,7 @@ export default () =>{
                 <Route path="/epidemia" element={  <Suspense fallback={<>...</>}><Epidemia /></Suspense>} />
                 <Route path="/mapa" element={  <Suspense fallback={<>...</>}><Mapa /></Suspense>} />
                 <Route path="/usuarios" element={ <Suspense fallback={<>...</>}><Users /></Suspense>} />
+                <Route path="/nomenclador_tipo" element={ <Suspense fallback={<>...</>}><TipoE /></Suspense>} />
                 <Route path="*" element={ <Suspense fallback={<>...</>}><E404 /></Suspense>} />
             </Routes>
         </AuthProvider>

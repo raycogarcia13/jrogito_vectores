@@ -195,7 +195,7 @@ export default function DataTable() {
 
     return (
         selectedPosition ? 
-            <Marker           
+            <Marker       
             key={selectedPosition[0]}
             position={selectedPosition}
             interactive={false} 

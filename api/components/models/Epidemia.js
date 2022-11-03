@@ -1,5 +1,7 @@
 const { Schema, model, Types } = require("mongoose");
 
+const TipoEpidemia = require("./TipoEpidemia")
+
 const dataSchema = new Schema({
     codigo:{
         type: String,
@@ -15,6 +17,7 @@ const dataSchema = new Schema({
         type:String
     },
     latlong:[Number],
+    sexo:{type:String},
     municipio:{
         type:String,
         default: 'Isla de la Juventud'
@@ -36,6 +39,7 @@ const dataSchema = new Schema({
     fecha_suma:{
         type: Date,
     },
+    tipo:{type: Types.ObjectId, ref:TipoEpidemia},
     resultado:{
         type: String,
         enum:['NEGATIVO','POSITIVO'],
