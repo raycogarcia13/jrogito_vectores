@@ -6220,6 +6220,11 @@ language-tags@^1.0.5:
   dependencies:
     language-subtag-registry "~0.3.2"
 
+leaflet-fullscreen@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/leaflet-fullscreen/-/leaflet-fullscreen-1.0.2.tgz#09c61c4bac45f63b2ee126afd87e5cd97650fc1b"
+  integrity sha512-1Yxm8RZg6KlKX25+hbP2H/wnOAphH7hFcvuADJFb4QZTN7uOSN9Hsci5EZpow8vtNej9OGzu59Jxmn+0qKOO9Q==
+
 leaflet-geosearch@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/leaflet-geosearch/-/leaflet-geosearch-3.7.0.tgz#42f8918ed2584956c90d8c8798cc13aa8a22972f"
@@ -8364,7 +8369,7 @@ react-leaflet-search@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-leaflet-search/-/react-leaflet-search-2.0.1.tgz#73d29114648ed92b7936c1a9fc0326f0ab7e435b"
   integrity sha512-doOcPPUgQVO2CJrO5kg0o14qCC/iD4gQwIclZt4xfvO353yUVRGkBAt5LOhjFLgLzxWjI54VkBKK3EK1ps6clA==
 
-react-leaflet@latest:
+react-leaflet@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-4.1.0.tgz#b53bce23af3bd932c189d7a80bcc7102db85edee"
   integrity sha512-i+V9pX5lywJ48O2+K3USeeTdYLIhxnLMweH+YLd/UPqVIj3uKzE3Q29bzt83PBtViyZmxDlulzC6uoR3JLiE9A==

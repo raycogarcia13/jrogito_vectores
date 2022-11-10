@@ -21,7 +21,22 @@ const AuthProvider = ({ children }) => {
   const handleLogin = (data) => {
       setToken(data.token);
       setUser(data.user);
-      navigate('/home',{replace:true});
+
+      const {role} = data.user;
+      switch(role){
+        case 'IGM':
+          navigate('/medico',{replace:true});
+          break;
+        case 'CHEM':
+          navigate('/chem',{replace:true});
+          break;
+        case 'Salud':
+          navigate('/home',{replace:true});
+          break;
+        case 'Vectores':
+          navigate('/vector',{replace:true});
+          break;
+      } 
   };
 
   const handleLogout = () => {

@@ -24,7 +24,7 @@ const dataSchema = new Schema({
     role:{
         type: String,
         default: 'CHEM',
-        enum: ['CHEM', 'Salud','IGM']
+        enum: ['CHEM', 'Salud','IGM',"Vectores"]
     },
     createdAt:{
         type: Date,

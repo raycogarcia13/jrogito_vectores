@@ -23,6 +23,9 @@ import hash from 'object-hash';
 
 import { GeoSearchControl,OpenStreetMapProvider } from 'leaflet-geosearch';
 
+import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js';
+import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
+
 
 L.Marker.prototype.options.icon = L.icon({ iconUrl: icon })
 
@@ -132,6 +135,7 @@ const click = async ()=>{
       <Card style={{ width: '100%',paddingBottom:'10vh' }}>
          
          <MapContainer 
+          fullscreenControl={true}
          style={{height: '80vh', zIndex:'1'}}
           bounds={[ [21.8932641596, -82.8244219401], [21.9016376414, -82.8096053901] ]} 
           center={latLng(21.75, -82.85)} 

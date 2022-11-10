@@ -29,8 +29,11 @@ import {
 import {api} from '../config/axios'
 
 
+
 import { MapContainer, Marker, Popup, TileLayer,useMap, useMapEvents } from 'react-leaflet'
 import L,{ latLng } from "leaflet";
+import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js';
+import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 const { TextArea } = Input;
 const Context = React.createContext({ name: 'Default' });
 
@@ -310,11 +313,12 @@ const openNotification = (type,title,text) => {
               </Form.Item>
            <Divider />
           <MapContainer 
-          style={{height: '50vh', zIndex:'1'}}
+            fullscreenControl={true}
+            style={{height: '50vh', zIndex:'1'}}
             bounds={[ [21.8932641596, -82.8244219401], [21.9016376414, -82.8096053901] ]} 
             center={latLng(21.75, -82.85)} 
             attribution='<a href="mailto:rayco.garcia13@nauta.cu>r@ancode</a>'
-            zoom={15} 
+            zoom={10} 
             scrollWheelZoom={true}>
             <TileLayer
               attribution='<a href="mailto:rayco.garcia13@nauta.cu>r@ancode</a>'

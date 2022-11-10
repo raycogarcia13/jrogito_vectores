@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require("mongoose");
+const Sintomas = require("./Sintomas");
 
 const TipoEpidemia = require("./TipoEpidemia")
 
@@ -28,6 +29,7 @@ const dataSchema = new Schema({
     fecha_primera:{
         type: Date,
     },
+    sintomas:[{type:Types.ObjectId, ref: Sintomas}],
     fecha_muestra:{
         type: Date,
     },
@@ -39,11 +41,14 @@ const dataSchema = new Schema({
     fecha_suma:{
         type: Date,
     },
+    manzana:{
+        type: String,
+    },
     tipo:{type: Types.ObjectId, ref:TipoEpidemia},
     resultado:{
         type: String,
-        enum:['NEGATIVO','POSITIVO'],
-        default: "NEGATIVO"
+        enum:['NEGATIVO','POSITIVO','EN LABORATORIO'],
+        default: "EN LABORATORIO"
     },
     date_until:{type: Date, default: +new Date() + 30*24*60*60*1000},
     createdAt:{

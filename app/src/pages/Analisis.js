@@ -91,7 +91,7 @@ export default function DataTable() {
         </Space>
       )
     } },
-    // { dataIndex: 'resultado', key: 'resultado', title: 'Resultado' },
+    { dataIndex: 'resultado', key: 'resultado', title: 'Resultado' },
     {
       key:'actions', title:'...',
       render: (item)=>{
@@ -139,6 +139,7 @@ export default function DataTable() {
     setStatus('');
     setAction('Nuevo')
     setFilter("")
+    setId("")
   };
 
   const handleCloseD = () => {
@@ -147,34 +148,19 @@ export default function DataTable() {
   };
 
   const submitForm = async (values) =>{
-    if(selectedPosition[0]==0){
-      openNotification('error','Faltan datos', 'Debe escoger le punto de geolocaalización, ya que la automática no se ha podido completar')
-      return;
+    if(id==''){
+      message.error("Debe escoger un análisis")
     }
-    console.log(values.sintomas)
-    setStatus('loading');
-    values.latlong = selectedPosition;
-    if(action=='Nuevo'){
-      const uri = "/epidemia";
-      api.post(uri,values).then(res=>{
-        loadData();
-        setStatus('recived');
-        message.success('Igm Insertado correctamente')
-        handleClose();
-      }).catch(err=>{
-        message.error(err.message)
-      })  
-    }else{
+      setStatus('loading');
       const uri = `/epidemia/${id}`;
       api.put(uri,values).then(res=>{
         loadData();
         setStatus('recived');
-        message.success('Igm actualizado correctamente')
+        message.success('Resultado insertado')
         handleClose();
       }).catch(err=>{
         message.error(err.message)
       })
-    }
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -186,8 +172,8 @@ export default function DataTable() {
   const loadData = ()=>{
     api.get('/epidemia').then(res=>{
       const d = res.data.data; 
-      setData(d.map((it)=>{return {...it,key:it._id}}))
-      setFData(d.map((it)=>{return {...it,key:it._id}}))
+      setData(d.filter(it=>it.resultado=="EN LABORATORIO").map((it)=>{return {...it,key:it._id}}))
+      setFData(d.filter(it=>it.resultado=="EN LABORATORIO").map((it)=>{return {...it,key:it._id}}))
     })
   }
   const loadTipos = ()=>{
@@ -282,16 +268,15 @@ const changeSearch = (s) =>{
                 name="nombre"
                 rules={[{ required: true, message: 'Debe insertar el nombre!' }]}
               >
-                <Input />
+                <Input disabled/>
               </Form.Item>
               <Row>
                 <Col span={10}>
                   <Form.Item
                     label="Código"
                     name="codigo"
-                    rules={[{ required: true, message: 'Debe insertar el código' }]}
                   >
-                    <Input />
+                    <Input  disabled/>
                   </Form.Item>
                 
                 </Col>
@@ -300,7 +285,7 @@ const changeSearch = (s) =>{
                       label="Tipo de enfermedad"
                       name="tipo"
                     >
-                    <Select>
+                    <Select disabled>
                       {tipos.map(it=><Option value={it._id}>{it.tipo}</Option>)}
                     </Select>
                   </Form.Item>
@@ -308,128 +293,29 @@ const changeSearch = (s) =>{
                 </Col>
               </Row>
               <Form.Item
-                  label="Dirección"
-                  name="direccion"
-                  rules={[{ required: true, message: 'Debe insertar la dirección' }]}
+                  label="Fecha de salida del resultado"
+                  name="fecha_suma"
+                  rules={[{ required: true, message: 'Debe insertar la fecha!' }]}
                 >
-                  <TextArea autoSize={{ minRows: 3, maxRows: 5 }}/>
-                </Form.Item>
-              <Row>
-                <Col span={10}>
-                  <Form.Item
-                    label="Carnet de Identidad"
-                    name="carnet"
-                    rules={[
-                      { required: true, message: 'Debe insertar el carnet!' },
-                      { min: 11, message: 'Debe tener 11 caracteres.' },
-                      { max: 11, message: 'Debe tener 11 caracteres.' },
-                    ]}
-                  >
-                  <Input type='number'/>
-                </Form.Item>
-                </Col>
-                <Col offset={2} span={12}>
-                  <Form.Item
-                      label="Fecha primeros síntomas"
-                      name="fecha_primera"
-                      rules={[{ required: true, message: 'Debe insertar la fecha!' }]}
-                    >
-                    <DatePicker style={{ width: '100%' }}/>
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={10}>
-                  <Form.Item
-                      label="Fecha de la toma de la muestra"
-                      name="fecha_muestra"
-                      rules={[{ required: true, message: 'Debe insertar la fecha!' }]}
-                    >
-                    <DatePicker style={{ width: '100%' }}/>
-                  </Form.Item>
-                </Col>
-                <Col offset={2} span={12}>
-                  <Form.Item
-                        label="Síntomas" name="sintomas"
-                      >
-                      <Select mode="tags">
-                        {sintoma.map(it=><Option value={it._id}>{it.name}</Option>)}
-                      </Select>
-                    </Form.Item>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={10}>
-                  <Form.Item
-                    label="Manzana"
-                    name="manzana"
-                    rules={[
-                      { required: true, message: 'Debe insertar la manzana!' },
-                    ]}
-                  >
-                  <Input type='number'/>
-                  </Form.Item>
-                </Col>
-                <Col offset={2} span={12}>
-                  <Form.Item
-                      label="Centro / Hospital"
-                      name="centro"
-                    >
-                    <Select defaultValue="Hospital">
-                      <Option value="Hospital">Hospital</Option>
-                      <Option value="Policlínico 1">Policlínico 1</Option>
-                      <Option value="Policlínico 2">Policlínico 2</Option>
-                      <Option value="Policlínico 3">Policlínico 3</Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={10}>
-                  <Form.Item
-                      label="Fecha de salida del resultado"
-                      name="fecha_suma"
-                      rules={[{ required: true, message: 'Debe insertar la fecha!' }]}
-                    >
-                    <DatePicker style={{ width: '100%' }}/>
-                  </Form.Item>
-                </Col>
-                <Col offset={2} span={12}>
-                  <Form.Item
-                      label="Resultado"
-                      name="resultado"
-                    >
-                    <Select defaultValue="NEGATIVO">
-                      <Option value="POSITIVO">POSITIVO</Option>
-                      <Option value="NEGATIVO">NEGATIVO</Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
+                <DatePicker style={{ width: '100%' }}/>
+              </Form.Item>
+              <Form.Item
+                  label="Resultado"
+                  name="resultado"
+                >
+                <Select defaultValue="NEGATIVO">
+                  <Option value="POSITIVO">POSITIVO</Option>
+                  <Option value="NEGATIVO">NEGATIVO</Option>
+                </Select>
+              </Form.Item>
            <Divider />
-          <MapContainer 
-          fullscreenControl={true}
-          style={{height: '50vh', zIndex:'1'}}
-          bounds={[ [21.8932641596, -82.8244219401], [21.9016376414, -82.8096053901] ]} 
-          center={latLng(21.75, -82.85)} 
-          attribution='<a href="mailto:rayco.garcia13@nauta.cu>r@ancode</a>'
-          zoom={10} 
-          scrollWheelZoom={true}>
-            
-            <TileLayer
-              attribution='<a href="mailto:rayco.garcia13@nauta.cu>r@ancode</a>'
-              url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
-            />
-            <Markers />
-          </MapContainer>
-          <Divider />
           <Form.Item wrapperCol={{ span: 12, offset: 8 }}>
             <Button type="danger" htmlType="button" onClick={ handleClose}>
               Cancelar
             </Button>
             &nbsp;
-            <Button type="primary" htmlType="submit">
-              {action}
+            <Button type="primary" htmlType="submit" disabled={id==''}>
+              Insertar Resultado
             </Button>
           </Form.Item>
 

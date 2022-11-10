@@ -11,9 +11,11 @@ import {
   Typography, 
   Form,
   Input,
-  Select,
   Tooltip,
+  Tag
 } from 'antd';
+
+import { Colorpicker, ColorPickerValue } from 'antd-colorpicker'
 
 import { 
   ContainerOutlined, 
@@ -23,45 +25,24 @@ import {
 
 import {api} from '../config/axios'
 
-const { Option } = Select;
+const { TextArea } = Input;
 
 export default function DataTable() {
   const [open, setOpen] = React.useState(false);
   const [open_delete, setOpenDelete] = React.useState(false);
   const [data,setData] = React.useState([])
   const [nuevo,setNuevo] = React.useState({})
-  const [action,setAction] = React.useState("Nuevo")
+  const [color,setColor] = React.useState('#f00')
+  const [action,setAction] = React.useState("Nueva")
   
   const [form] = Form.useForm();
   
   const [id,setId] = React.useState("")
   const [status,setStatus] = React.useState('')
 
-  const changeRol = (role) =>{
-    let n = role;
-    switch(role){
-      case 'CHEM':
-        n = "Laboratorio";
-        break;
-      case 'IGM':
-        n = "Médico";
-        break;
-      case "Salud":
-        n = "Administradores";
-        break;
-    }
-    return n;
-  }
   const columns = [
-    { dataIndex: 'name', key: 'name', title: 'Nombre' },
-    { dataIndex: 'email', key: 'email', title: 'Correo' },
-    { dataIndex: 'role', key: 'role', title: 'Rol',render: (item)=>{
-      return (
-        <Space>
-          {changeRol(item)}
-        </Space>
-      )
-    } },
+    { dataIndex: 'name', key: 'name', title: 'Síntoma', },
+    { dataIndex: 'descripcion', key: 'description', title: 'Descripción'},
     {
       key:'actions', title:'...',
       render: (item)=>{
@@ -85,7 +66,7 @@ export default function DataTable() {
   ];
 
   const nuevoOpen = () => {
-    setAction('Nuevo')
+    setAction('Nueva')
     setOpen(true);
   };
 
@@ -115,22 +96,22 @@ export default function DataTable() {
 
   const submitForm = async (values) =>{
     setStatus('loading');
-    if(action=='Nuevo'){
-      const uri = "/users";
+    if(action=='Nueva'){
+      const uri = "/nomenclador/sintoma";
       api.post(uri,values).then(res=>{
         loadData();
         setStatus('recived');
-        message.success('Usuario Insertado correctamente')
+        message.success('Síntoma insertada correctamente')
         handleClose();
       }).catch(err=>{
         message.error(err.message)
       })
     }else{
-      const uri = `/users/${id}`;
+      const uri = `/nomenclador/sintoma/${id}`;
       api.put(uri,values).then(res=>{
         loadData();
         setStatus('recived');
-        message.success('Usuario actualizado correctamente')
+        message.success('Síntoma actualizada correctamente')
         handleClose();
       }).catch(err=>{
         message.error(err.message)
@@ -141,7 +122,7 @@ export default function DataTable() {
   const deleteUser = ()=>{
     console.log('ss')
     setStatus('loading')
-    const uri = `/users/${id}`;
+    const uri = `/nomenclador/sintoma/${id}`;
     api.delete(uri).then(res=>{
       setStatus('recived')
       loadData();
@@ -156,7 +137,7 @@ export default function DataTable() {
   };
 
   const loadData = ()=>{
-    api.get('/users').then(res=>{
+    api.get('/nomenclador/sintoma').then(res=>{
       const d = res.data.data; 
       setData(d.map((it)=>{return {...it,key:it._id}}))
     })
@@ -175,7 +156,7 @@ export default function DataTable() {
          <div style={{display:'flex', justifyContent:'space-between'}}>
             <Typography.Title level={5} style={{ margin: 0 }}>
               <ContainerOutlined style={{marginRight:10}}/>
-              Usuarios
+              Listado de Síntomas
             </Typography.Title>
           <Button onClick={nuevoOpen} type='primary'>Nuevo</Button>
          </div>
@@ -187,7 +168,7 @@ export default function DataTable() {
           />
 
         <Modal
-          title={`Eliminar usuario`}
+          title={`Eliminar tipo`}
           open={open_delete}
           confirmLoading={loading()}
           okText="Enviar"
@@ -204,10 +185,10 @@ export default function DataTable() {
             </>
             }
           >
-            Está seguro de querer eliminar este usuario
+            Está seguro de querer eliminar este síntoma
         </Modal>
         <Modal
-          title={`${action} usuario`}
+          title={`${action} tipo`}
           open={open}
           confirmLoading={loading()}
           okText="Enviar"
@@ -237,36 +218,17 @@ export default function DataTable() {
               <Form.Item
                 label="Nombre"
                 name="name"
-                rules={[{ required: true, message: 'Debe insertar el nombre!' }]}
+                rules={[{ required: true, message: 'Debe insertar el sintoma!' }]}
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Correo"
-                name="email"
-                rules={[{ required: true, message: 'Debe insertar el correo!' }]}
+              <Form.Item 
+                label="Descripción" 
+                name="descripcion" 
               >
-                <Input />
+                <TextArea autoSize={{ minRows: 3, maxRows: 5 }}/>
               </Form.Item>
-              <Form.Item
-                label="Contraseña"
-                name="password"
-              >
-                <Input.Password />
-              </Form.Item>
-              <Form.Item
-                  label="Rol"
-                  name="role"
-                  rules={[{ required: true, message: 'Debe escoger el rol!' }]}
-                >
-
-                <Select>
-                  <Option value="Vectores">Vectores</Option>
-                  <Option value="IGM">Médico</Option>
-                  <Option value="CHEM">Laboratorio</Option>
-                  <Option value="Salud">Adminstradores</Option>
-                </Select>
-              </Form.Item>
+             
             </Form>
         </Modal>
 

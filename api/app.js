@@ -24,8 +24,12 @@ app.use('/api/v1',require('./components/router/users'))
 app.use('/api/v1',require('./components/router/vector'))
 // epidemia
 app.use('/api/v1',require('./components/router/epidemia'))
-// epidemia
+// tipos
 app.use('/api/v1/nomenclador',require('./components/router/tipos'))
+// sitnomas
+app.use('/api/v1/nomenclador',require('./components/router/sintoma'))
+// reportes
+app.use('/api/v1/reportes',require('./components/router/reportes'))
     
 //statics files
 // app.use(express.static(path.join(__dirname, "public")));

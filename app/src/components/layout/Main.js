@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Layout, Drawer, Affix } from "antd";
 import Router from '../../router'
-import Sidenav from "./Sidenav";
+import SidenavMain from "./Sidenav";
+import SidenaMedico from "../medico/Sidenav";
+import SidenavChem from "../chem/Sidenav";
+import SidenavVector from "../vector/Sidenav";
 import Header from "./Header";
 import Footer from "./Footer";
-
 
 import { useAuth } from '../../auth';
 
@@ -27,11 +29,14 @@ function Main({ token, logout}) {
   const handleSidenavColor = (color) => setSidenavColor(color);
   const handleFixedNavbar = (type) => setFixed(type);
 
+
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
 
   if(pathname == 'nomenclador_tipo')
     pathname = "Tipos de epidemia"
+  else if(pathname == 'nomenclador_sintoma')
+    pathname = "Síntomas"
 
   useEffect(() => {
     if (pathname === "rtl") {
@@ -47,6 +52,21 @@ function Main({ token, logout}) {
   const onLogout = async () =>{
     await dispatch(logoutAction());
     logout();
+  }
+
+
+  const Sidenav = (props)=>{
+    switch(user.role){
+      case 'IGM':
+        return <SidenaMedico props />
+      case 'CHEM':
+        return <SidenavChem props />
+      case 'Salud':
+        return <SidenavMain props />
+      case 'Vectores':
+        return <SidenavVector props />
+    }
+
   }
 
   return (

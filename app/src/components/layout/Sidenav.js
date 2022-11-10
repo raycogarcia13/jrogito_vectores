@@ -125,19 +125,23 @@ function Sidenav({ color }) {
             <span className="label">Inicio</span>
           </NavLink>
         </Menu.Item>
-        {/* <Menu.Item key="2">
-          <NavLink to="/tables">
+
+        <Menu.Item className="menu-item-header" key="14">
+          Reportes
+        </Menu.Item>
+        <Menu.Item key="3">
+          <NavLink to="/mapa">
             <span
               className="icon"
               style={{
-                background: page === "tables" ? color : "",
+                background: page === "mapa" ? color : "",
               }}
             >
-              {tables}
+              {<HeatMapOutlined />}
             </span>
-            <span className="label">Tables</span>
+            <span className="label">Febriles por áreas de salud</span>
           </NavLink>
-        </Menu.Item> */}
+        </Menu.Item>
 
         <Menu.Item className="menu-item-header" key="14">
           Mapa
@@ -200,6 +204,19 @@ function Sidenav({ color }) {
               <DatabaseOutlined />
             </span>
             <span className="label">Tipo de epidemia</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="5">
+          <NavLink to="/nomenclador_sintoma">
+            <span
+              className="icon"
+              style={{
+                background: page === "profile" ? color : "",
+              }}
+            >
+              <DatabaseOutlined />
+            </span>
+            <span className="label">Síntomas</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item className="menu-item-header" key="11">

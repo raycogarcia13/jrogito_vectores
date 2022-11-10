@@ -44,7 +44,7 @@ export default function DataTable() {
     { dataIndex: 'color', key: 'color', title: 'color', render: (item)=>{
       return (
          <Space>
-          <Tag color={item}>{item}</Tag>
+          <Tag color={item}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Tag>
         </Space>
       )
     }},

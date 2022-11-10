@@ -38,7 +38,7 @@ exports.create = catchAsyncErrors(async (req,res,next) =>{
 
     return res.json({
         status:"success",
-        // data
+        data
     })
 })
 
