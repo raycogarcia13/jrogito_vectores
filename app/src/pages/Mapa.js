@@ -65,7 +65,7 @@ export default function DataTable() {
             t.latlong.push(it.latlong);
             all.push(t);
           }else{
-            all[index].latLng.push(it.latlong);
+            all[index].latlong.push(it.latlong);
           }
         }
     })
