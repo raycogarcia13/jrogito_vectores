@@ -91,7 +91,7 @@ function Home() {
   return (
     <>
       <div className="layout-content">
-        <Row className="rowgap-vbox" gutter={[24, 0]}>
+        {/* <Row className="rowgap-vbox" gutter={[24, 0]}>
           {count.map((c, index) => (
             <Col
               key={index}
@@ -119,7 +119,7 @@ function Home() {
               </Card>
             </Col>
           ))}
-        </Row>
+        </Row> */}
 
         <Row gutter={[24, 0]}>
           <Col xs={24} sm={24} md={24} lg={24} xl={24}  >

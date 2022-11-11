@@ -130,16 +130,42 @@ function Sidenav({ color }) {
           Reportes
         </Menu.Item>
         <Menu.Item key="3">
-          <NavLink to="/mapa">
+          <NavLink to="/febriles">
             <span
               className="icon"
               style={{
                 background: page === "mapa" ? color : "",
               }}
             >
-              {<HeatMapOutlined />}
+              <DatabaseOutlined />
             </span>
-            <span className="label">Febriles por áreas de salud</span>
+            <span className="label">Febriles </span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <NavLink to="/enfermedad">
+            <span
+              className="icon"
+              style={{
+                background: page === "mapa" ? color : "",
+              }}
+            >
+              <DatabaseOutlined />
+            </span>
+            <span className="label">Por enfermedades</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <NavLink to="/tasa">
+            <span
+              className="icon"
+              style={{
+                background: page === "mapa" ? color : "",
+              }}
+            >
+              <DatabaseOutlined />
+            </span>
+            <span className="label">Tasa de infestación</span>
           </NavLink>
         </Menu.Item>
 
@@ -156,7 +182,7 @@ function Sidenav({ color }) {
             >
               {<HeatMapOutlined />}
             </span>
-            <span className="label">Mapa de estratificación</span>
+            <span className="label">Estratificación</span>
           </NavLink>
         </Menu.Item>
 

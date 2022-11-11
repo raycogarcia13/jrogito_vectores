@@ -11,7 +11,7 @@ import {
   Divider,
   Alert
 } from "antd";
-import signinbg from "../assets/images/img-signin.jpg";
+import signinbg from "../assets/images/logo_salud.webp";
 import { loginAction } from '../store/auth/authActions'
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth} from '../auth'
@@ -58,7 +58,7 @@ const { Header, Footer, Content } = Layout;
             </div>
           
           </Header>
-          <Content className="signin">
+          <Content className="signin" style={{justifyContent:'center', alignItems:'center'}}>
             <Row gutter={[24, 0]} justify="space-around">
               <Col
                 xs={{ span: 24, offset: 0 }}

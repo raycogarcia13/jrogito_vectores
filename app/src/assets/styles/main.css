@@ -2147,7 +2147,9 @@ body {
 .sign-img img {
   width: 100%;
   max-width: 500px;
-  margin: auto;
+  margin-top: 15vh !important;
+  margin-bottom: 35vh !important;
+  /* margin: auto; */
   display: block;
 }
 .layout-signin {

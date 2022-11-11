@@ -22,7 +22,7 @@ const NewHOC = (PassedComponent) => {
 }
 }
 const Home = lazy( ()=>import('./pages/Home') )
-const Tables = lazy( ()=>import('./pages/Tables') )
+const Tables = lazy( ()=>import('./pages/Febriles') )
 const Vector = lazy( ()=>import('./pages/Vector') )
 const Epidemia = lazy( ()=>import('./pages/Epidemia') )
 const Analisis = lazy( ()=>import('./pages/Analisis') )
@@ -30,6 +30,9 @@ const Users = lazy( ()=>import('./pages/Users') )
 const Mapa = lazy( ()=>import('./pages/Mapa') )
 const TipoE = lazy( ()=>import('./pages/TipoEpidemia') )
 const Sintomas = lazy( ()=>import('./pages/Sintomas') )
+const Febriles = lazy( ()=>import('./pages/Febriles') )
+const Resumen_e = lazy( ()=>import('./pages/Resumen_e') )
+const Tasa = lazy( ()=>import('./pages/Tasa') )
 
 
 
@@ -52,6 +55,9 @@ export default () =>{
                 <Route path="/medico" element={ <Suspense fallback={<>...</>}><Mapa /></Suspense>} />
                 <Route path="/chem" element={ <Suspense fallback={<>...</>}><Mapa /></Suspense>} />
                 <Route path="/vector" element={ <Suspense fallback={<>...</>}><Mapa /></Suspense>} />
+                <Route path="/febriles" element={ <Suspense fallback={<>...</>}><Febriles /></Suspense>} />
+                <Route path="/enfermedad" element={ <Suspense fallback={<>...</>}><Resumen_e /></Suspense>} />
+                <Route path="/tasa" element={ <Suspense fallback={<>...</>}><Tasa /></Suspense>} />
                 <Route path="*" element={ <Suspense fallback={<>...</>}><E404 /></Suspense>} />
             </Routes>
         </AuthProvider>

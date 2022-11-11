@@ -10,31 +10,141 @@
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import * as React from 'react';
+
 import ReactApexChart from "react-apexcharts";
 import { Row, Col, Typography } from "antd";
-import eChart from "./configs/eChart";
+import {api} from '../../config/axios'
+
 
 function EChart() {
   const { Title, Paragraph } = Typography;
+  const [data,setData] = React.useState([])
+  const [data2,setData2] = React.useState([])
 
-  const items = [
-    {
-      Title: "3,6K",
-      user: "Users",
+  const loadData = ()=>{
+    api.get('/reportes/groupingMonth').then(res=>{
+      setData(res.data.data)
+    })
+  }
+  const loadData2 = ()=>{
+    api.get('/reportes/groupingEnfermedad').then(res=>{
+      setData2(res.data.data)
+    })
+  }
+
+  React.useEffect( ()=>{
+    loadData();
+    loadData2();
+  },[] )
+
+  const eChart = {
+    series: [
+      {
+        name: "Positivos",
+        data: data.map(it=>it.cant),
+        color: "#fff",
+      },
+    ],
+  
+    options: {
+      chart: {
+        type: "bar",
+        width: "100%",
+        height: "auto",
+  
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "55%",
+          borderRadius: 5,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 1,
+        colors: ["transparent"],
+      },
+      grid: {
+        show: true,
+        borderColor: "#ccc",
+        strokeDashArray: 2,
+      },
+      xaxis: {
+        categories: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre"
+        ],
+        labels: {
+          show: true,
+          align: "right",
+          minWidth: 0,
+          maxWidth: 160,
+          style: {
+            colors: [
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+            ],
+          },
+        },
+      },
+      yaxis: {
+        labels: {
+          show: true,
+          align: "right",
+          minWidth: 0,
+          maxWidth: 160,
+          style: {
+            colors: [
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+            ],
+          },
+        },
+      },
+  
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return  val;
+          },
+        },
+      },
     },
-    {
-      Title: "2m",
-      user: "Clicks",
-    },
-    {
-      Title: "$772",
-      user: "Sales",
-    },
-    {
-      Title: "82",
-      user: "Items",
-    },
-  ];
+  }
 
   return (
     <>
@@ -48,20 +158,16 @@ function EChart() {
         />
       </div>
       <div className="chart-vistior">
-        <Title level={5}>Active Users</Title>
+        <Title level={5}>Casos positivos del año</Title>
         <Paragraph className="lastweek">
-          than last week <span className="bnb2">+30%</span>
-        </Paragraph>
-        <Paragraph className="lastweek">
-          We have created multiple options for you to put together and customise
-          into pixel perfect pages.
+          Casos detectados de cada enfermedad
         </Paragraph>
         <Row gutter>
-          {items.map((v, index) => (
+          {data2.map((v, index) => (
             <Col xs={6} xl={6} sm={6} md={6} key={index}>
               <div className="chart-visitor-count">
-                <Title level={4}>{v.Title}</Title>
-                <span>{v.user}</span>
+                <Title level={4}>{v.cant}</Title>
+                <span>{v.enfermedad}</span>
               </div>
             </Col>
           ))}
