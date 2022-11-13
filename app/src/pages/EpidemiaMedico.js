@@ -3,7 +3,7 @@ import {useEffect} from 'react';
 
 import { 
   Table, 
-  Alert,
+  Modal,
   message,
   DatePicker,
   Space, 
@@ -83,19 +83,19 @@ export default function DataTable() {
   const [status,setStatus] = React.useState('')
 
   const columns = [
-    { width:0.3,dataIndex: 'codigo', key: 'codigo', title: 'Código' },
-    { width:0.3,dataIndex: 'nombre', key: 'nombre', title: 'Paciente' },
-    { width:0.3,dataIndex: 'edad', key: 'edad', title: 'Edad' },
-    { width:0.3,dataIndex: 'sexo', key: 'sexo', title: 'Sexo' },
-    { width:0.3,dataIndex: 'centro', key: 'centro', title: 'Centro' },
-    { width:0.3,dataIndex: 'tipo', key: 'tipo', title: 'Enfermedad', render:(item)=>{
+    { dataIndex: 'codigo', key: 'codigo', title: 'Código' },
+    { dataIndex: 'nombre', key: 'nombre', title: 'Paciente' },
+    { dataIndex: 'edad', key: 'edad', title: 'Edad' },
+    { dataIndex: 'sexo', key: 'sexo', title: 'Sexo' },
+    { dataIndex: 'centro', key: 'centro', title: 'Centro' },
+    { dataIndex: 'tipo', key: 'tipo', title: 'Enfermedad', render:(item)=>{
       return (
         <Space>
            <Tag color={item.color}>{item.tipo}</Tag>
         </Space>
       )
     } },
-    {width:0.3, dataIndex: 'resultado', key: 'resultado', title: 'Resultado'},
+    // { dataIndex: 'resultado', key: 'resultado', title: 'Resultado' },
     {
       fixed:'right',
       key:'actions', title:'...',
@@ -449,28 +449,6 @@ const changeSearch = (s) =>{
                       <Option value="Policlínico 1">Policlínico 1</Option>
                       <Option value="Policlínico 2">Policlínico 2</Option>
                       <Option value="Policlínico 3">Policlínico 3</Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={10}>
-                  <Form.Item
-                      label="Fecha de salida del resultado"
-                      name="fecha_suma"
-                      rules={[{ required: true, message: 'Debe insertar la fecha!' }]}
-                    >
-                    <DatePicker style={{ width: '100%' }} disabledDate={d => !d || !form.getFieldValue('fecha_muestra') || d.isBefore(form.getFieldValue('fecha_muestra')) || d.isAfter(new Date()) }/>
-                  </Form.Item>
-                </Col>
-                <Col offset={2} span={12}>
-                  <Form.Item
-                      label="Resultado"
-                      name="resultado"
-                    >
-                    <Select defaultValue="NEGATIVO">
-                      <Option value="POSITIVO">POSITIVO</Option>
-                      <Option value="NEGATIVO">NEGATIVO</Option>
                     </Select>
                   </Form.Item>
                 </Col>

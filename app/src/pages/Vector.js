@@ -29,8 +29,11 @@ import {
 import {api} from '../config/axios'
 
 
+import {consejos} from "../datas/consejos_populares"
+import {viales} from "../datas/viales"
+import hash from 'object-hash';
 
-import { MapContainer, Marker, Popup, TileLayer,useMap, useMapEvents } from 'react-leaflet'
+import { LayersControl, WMSTileLayer,GeoJSON, MapContainer, Marker, Popup, TileLayer,useMap, useMapEvents } from 'react-leaflet'
 import L,{ latLng } from "leaflet";
 import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js';
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
@@ -68,6 +71,7 @@ export default function DataTable() {
     ), },
     { dataIndex: 'descripcion', key: 'descripcion', title: 'Descripción' },
     {
+      fixed:'right',
       key:'actions', title:'...',
       render: (item)=>{
         return (
@@ -208,6 +212,10 @@ export default function DataTable() {
     
 }
 
+const onEachFeature = (feature, layer) =>{
+  layer.bindTooltip(feature.properties.nombre.toString(), {permanent: true}).openTooltip();
+}
+
 const openNotification = (type,title,text) => {
   notification[type]({
     message: title,
@@ -287,6 +295,15 @@ const openNotification = (type,title,text) => {
               </Col>
               <Col offset={1}>
                 <Form.Item
+                label="Poblado"
+                name="poblado"
+                rules={[{ required: true, message: 'Debe insertar el poblado!' }]}
+              >
+                <Input />
+              </Form.Item>
+              </Col>
+              <Col offset={1}>
+                <Form.Item
                 label="Manzana"
                 name="manzana"
                 rules={[{ required: true, message: 'Debe insertar la manzana!' }]}
@@ -320,10 +337,26 @@ const openNotification = (type,title,text) => {
             attribution='<a href="mailto:rayco.garcia13@nauta.cu>r@ancode</a>'
             zoom={10} 
             scrollWheelZoom={true}>
-            <TileLayer
-              attribution='<a href="mailto:rayco.garcia13@nauta.cu>r@ancode</a>'
-              url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
-            />
+            <LayersControl position="topright">
+                <LayersControl.BaseLayer checked name="Andariego">
+                  <WMSTileLayer
+                      layers={'osm'}
+                      url="https://cache.andariego.cu/wms"
+                    />
+                </LayersControl.BaseLayer>
+                <LayersControl.BaseLayer name="OSM">
+                <TileLayer
+                  attribution='<a href="mailto:rayco.garcia13@nauta.cu>r@ancode</a>'
+                  url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
+                  />
+                </LayersControl.BaseLayer>
+                <LayersControl.BaseLayer name="Litoral">
+                  <GeoJSON key={hash('jp;a')} style={{ fillColor: "#BDDAB1",color: "rgba(3,3,3,0.1)"}}  onEachFeature={onEachFeature} data={consejos} />
+                </LayersControl.BaseLayer>
+                <LayersControl.Overlay name="Viales">
+                  <GeoJSON key={hash('jpg')} style={{ fillColor: "#BDDAB1",color: "rgba(3,3,3,0.1)"}}  data={viales} />
+                </LayersControl.Overlay>
+            </LayersControl>
             <Markers />
           </MapContainer>
           <Divider />
@@ -348,6 +381,7 @@ const openNotification = (type,title,text) => {
 
             <Divider />
               <Table
+                scroll={{x:'auto'}}
                 dataSource={data}
                 columns={columns}
               />

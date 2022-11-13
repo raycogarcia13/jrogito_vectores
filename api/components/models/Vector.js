@@ -10,9 +10,6 @@ const dataSchema = new Schema({
     entre2:{
         type: String,
     },
-    entre2:{
-        type: String,
-    },
     manzana:{type: Number},
     descripcion:{
         type: String,

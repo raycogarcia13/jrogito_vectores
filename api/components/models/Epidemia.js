@@ -14,9 +14,22 @@ const dataSchema = new Schema({
     edad:{
         type: Number
     },
+    calle:{
+        type:String
+    },
+    entre1:{
+        type:String
+    },
+    entre2:{
+        type:String
+    },
+    numero:{
+        type:String
+    },
     direccion:{
         type:String
     },
+
     latlong:[Number],
     sexo:{type:String},
     municipio:{
@@ -44,6 +57,10 @@ const dataSchema = new Schema({
     manzana:{
         type: String,
     },
+    poblado:{
+        type: String,
+        default:"Nueva Gerona"
+    },
     tipo:{type: Types.ObjectId, ref:TipoEpidemia},
     resultado:{
         type: String,
@@ -51,6 +68,8 @@ const dataSchema = new Schema({
         default: "EN LABORATORIO"
     },
     date_until:{type: Date, default: +new Date() + 30*24*60*60*1000},
+    habitantes:{type: Number, default: 1 },
+    cant_direction:{type: Number, default: 1 },
     createdAt:{
         type: Date,
         default: Date.now()

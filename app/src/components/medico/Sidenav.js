@@ -74,7 +74,7 @@ function Sidenav({ color }) {
           Gestión
         </Menu.Item>
         <Menu.Item key="4">
-          <NavLink to="/epidemia">
+          <NavLink to="/epidemia_medico">
             <span
               className="icon"
               style={{

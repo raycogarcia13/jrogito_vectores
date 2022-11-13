@@ -25,6 +25,7 @@ const Home = lazy( ()=>import('./pages/Home') )
 const Tables = lazy( ()=>import('./pages/Febriles') )
 const Vector = lazy( ()=>import('./pages/Vector') )
 const Epidemia = lazy( ()=>import('./pages/Epidemia') )
+const EpidemiaMedico = lazy( ()=>import('./pages/EpidemiaMedico') )
 const Analisis = lazy( ()=>import('./pages/Analisis') )
 const Users = lazy( ()=>import('./pages/Users') )
 const Mapa = lazy( ()=>import('./pages/Mapa') )
@@ -47,6 +48,7 @@ export default () =>{
                 <Route path="/tables" element={  <Suspense fallback={<>...</>}><Tables /></Suspense>} />
                 <Route path="/vectores" element={  <Suspense fallback={<>...</>}><Vector /></Suspense>} />
                 <Route path="/epidemia" element={  <Suspense fallback={<>...</>}><Epidemia /></Suspense>} />
+                <Route path="/epidemia_medico" element={  <Suspense fallback={<>...</>}><EpidemiaMedico /></Suspense>} />
                 <Route path="/analisis" element={  <Suspense fallback={<>...</>}><Analisis /></Suspense>} />
                 <Route path="/mapa" element={  <Suspense fallback={<>...</>}><Mapa /></Suspense>} />
                 <Route path="/usuarios" element={ <Suspense fallback={<>...</>}><Users /></Suspense>} />
